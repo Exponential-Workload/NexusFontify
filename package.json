@@ -4,7 +4,7 @@
   "description": "Use a decent fonts service",
   "scripts": {
     "build:es": "esbuild src/**/* src/* --bundle --minify --platform=browser --format=esm --sourcemap --outdir=dist",
-    "build": "pnpm build:es && web-ext build",
+    "build": "pnpm build:es && web-ext build --overwrite-dest",
     "dev:start": "web-ext run --source-dir .",
     "dev:watch": "pnpm build:es --watch",
     "dev": "concurrently \"npm:dev:*\""
