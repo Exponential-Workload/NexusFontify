@@ -1,0 +1,24 @@
+{
+  "name": "nexusfontify",
+  "private": true,
+  "description": "Use a decent fonts service",
+  "scripts": {
+    "build:es": "esbuild src/**/* src/* --bundle --minify --platform=browser --format=esm --sourcemap --outdir=dist",
+    "build": "pnpm build:es && web-ext build",
+    "dev:start": "web-ext run --source-dir .",
+    "dev:watch": "pnpm build:es --watch",
+    "dev": "concurrently \"npm:dev:*\""
+  },
+  "keywords": [],
+  "author": "Exponential-Workload",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/webextension-polyfill": "^0.10.7",
+    "concurrently": "^8.2.2",
+    "esbuild": "^0.19.8",
+    "web-ext": "^7.9.0"
+  },
+  "dependencies": {
+    "webextension-polyfill": "^0.10.0"
+  }
+}
