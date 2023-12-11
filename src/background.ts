@@ -1,4 +1,5 @@
 import chrome from 'webextension-polyfill';
+import updateCSP from './CSP';
 chrome.webRequest.onBeforeRequest.addListener(
   details => {
     const modifiedUrl = details.url.replace(
@@ -12,16 +13,6 @@ chrome.webRequest.onBeforeRequest.addListener(
   ['blocking'],
 );
 let webFontLoaderUrl = `https://cdn.jsdelivr.net/npm/@nexusfonts/webfontloader@1.6.29-nexus/webfontloader.cjs`;
-// below would be nice but cors
-// fetch(webFontLoaderUrl)
-//   .then(v => v.text())
-//   .then(
-//     v =>
-//       (webFontLoaderUrl = `data:application/javascript,${encodeURIComponent(
-//         v,
-//       )}`),
-//   )
-//   .catch(console.warn);
 chrome.webRequest.onBeforeRequest.addListener(
   () => ({
     redirectUrl: webFontLoaderUrl,
@@ -34,4 +25,23 @@ chrome.webRequest.onBeforeRequest.addListener(
   }),
   { urls: ['https://cdn.jsdelivr.net/npm/webfontloader/*/webfont.js'] },
   ['blocking'],
+);
+chrome.webRequest.onHeadersReceived.addListener(
+  details => {
+    const headers = details.responseHeaders ?? [];
+
+    const cspHeader = headers.find(
+      v => v.name.toLowerCase() === 'content-security-policy',
+    );
+    if (cspHeader && cspHeader.value)
+      cspHeader.value = updateCSP(
+        updateCSP(cspHeader.value, 'font-src', 'https://cdn.fonts.nexus'),
+        'style-src',
+        'https://fonts.nexus',
+      );
+
+    return { responseHeaders: headers };
+  },
+  { urls: ['<all_urls>'] }, // You can specify the URLs you want to intercept
+  ['blocking', 'responseHeaders'],
 );
