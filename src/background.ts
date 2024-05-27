@@ -4,7 +4,7 @@ chrome.webRequest.onBeforeRequest.addListener(
   details => {
     const modifiedUrl = details.url.replace(
       'https://fonts.googleapis.com/',
-      'https://fonts.nexus/',
+      'https://fonts.arson.wtf/',
     );
 
     return { redirectUrl: modifiedUrl };
@@ -35,9 +35,9 @@ chrome.webRequest.onHeadersReceived.addListener(
     );
     if (cspHeader && cspHeader.value)
       cspHeader.value = updateCSP(
-        updateCSP(cspHeader.value, 'font-src', 'https://cdn.fonts.nexus'),
+        updateCSP(cspHeader.value, 'font-src', 'https://fcdn.arson.wtf'),
         'style-src',
-        'https://fonts.nexus',
+        'https://fonts.arson.wtf',
       );
 
     return { responseHeaders: headers };

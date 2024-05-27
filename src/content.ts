@@ -10,8 +10,8 @@ elements.forEach(element => {
   const href = element.getAttribute('href');
   if (href) {
     const modifiedHref = href
-      .replace('https://fonts.googleapis.com/', 'https://fonts.nexus/')
-      .replace('https://fonts.gstatic.com/', 'https://cdn.fonts.nexus/');
+      .replace('https://fonts.googleapis.com/', 'https://fonts.arson.wtf/')
+      .replace('https://fonts.gstatic.com/', 'https://fcdn.arson.wtf/');
     element.setAttribute('href', modifiedHref);
   }
 });
@@ -27,10 +27,10 @@ if (metaCSP) {
       updateCSP(
         csp ?? '',
         'font-src',
-        'https://cdn.fonts.nexus https://fonts-cdn.nexuspipe.com',
+        'https://fcdn.arson.wtf https://fonts-cdn.nexuspipe.com',
       ),
       'style-src',
-      'https://fonts.nexus',
+      'https://fonts.arson.wtf',
     ),
   );
 }
